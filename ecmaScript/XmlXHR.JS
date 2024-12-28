@@ -1,20 +1,34 @@
 const Xhr = new XMLHttpRequest();
-Xhr.open("GET", "https://api.github.com/users/elzerowebschool/repos");
-Xhr.send();
 console.log(Xhr)
 
-Xhr.onreadystatechange = () =>{
-    console.log(this.readyState)
-    console.log(this.status)
+let checkbox = document.getElementById('checkbox')
 
-    if(this.readyState === 4 && this.status ===  200){
-        console.log('monef' + this.responseText)
-        let jsData = JSON.parse(this.responseText)
-        console.log(jsData)
-        for(let data of jsData){
-            let div = document.createElement('div')
-            div.innerHTML = data.name
-            document.body.appendChild(div)
+checkbox.addEventListener('change', (e)=>{
+    if(checkbox.checked){  
+        Xhr.open("GET", "https://api.github.com/users/elzerowebschool/repos", true);
+        Xhr.send();
+        Xhr.onreadystatechange = () =>{
+            console.log(Xhr.readyState)
+            console.log(Xhr.status)
+            if(Xhr.readyState === 4 && Xhr.status ===  200){
+                console.log('monef' + Xhr.responseText)
+                let jsData = JSON.parse(Xhr.responseText)
+                let parentComponent = document.createElement('div')
+                parentComponent.className = 'parentComponent'
+                console.log(jsData)
+                for(let data of jsData){
+                    let div = document.createElement('div')
+                    div.innerHTML = data.name
+                    parentComponent.append(div)
+                    document.body.append(parentComponent)
+                }
+            }
         }
     }
-}
+    else{
+        let parentComponent = document.querySelector('.parentComponent')
+        if(parentComponent){
+            parentComponent.remove();
+        }
+    }
+})
