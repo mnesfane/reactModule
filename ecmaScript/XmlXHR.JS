@@ -35,7 +35,7 @@ console.log(Xhr)
 
 // =================== Xhr with promise ===================
 
-let fetchData = (ApiLink, id) =>{
+let myFetch = (ApiLink, id) =>{
     return new Promise((resolve, reject)=>{
         Xhr.open('GET', ApiLink , true)
         Xhr.send()
@@ -61,7 +61,7 @@ let fetchData = (ApiLink, id) =>{
 }
 
 
-fetchData('https://api.github.com/users/elzerowebschool/repos')
+myFetch('https://api.github.com/users/elzerowebschool/repos')
 .then(data =>{
     console.log('Data: ',data)
 })
